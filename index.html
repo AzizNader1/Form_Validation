@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f3e9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            border: 2px solid #d2691e;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #d2691e;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .input-control {
+            margin-bottom: 20px;
+        }
+
+        .input-control label {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .place {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border: 2px solid #d2691e;
+            border-radius: 15px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            border: 2px solid #d2691e;
+            border-radius: 15px;
+            background-color: #f7f3e9;
+            font-size: 18px;
+            padding: 10px 20px;
+            color: #d2691e;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #d2691e;
+            color: #fff;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .input-control.error input {
+            border-color: red;
+        }
+
+        .input-control.success input {
+            border-color: green;
+        }
+
+        .input-control .error {
+            font-size: 14px;
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Form Registration</h1>
+        <form action="#" id="form1">
+            <div class="input-control">
+                <label for="name">Your Name:</label>
+                <input type="text" class="place" id="name">
+                <div class="error"></div>
+            </div>
+            <div class="input-control">
+                <label for="age">Your Age:</label>
+                <input type="text" class="place" id="age">
+                <div class="error"></div>
+            </div>
+            <div class="input-control">
+                <label for="address">Your Address:</label>
+                <input type="text" class="place" id="address">
+                <div class="error"></div>
+            </div>
+            <div class="input-control">
+                <label for="phone">Your Phone:</label>
+                <input type="text" class="place" id="phone" pattern="01[0125][0-9]{8}" title="Please enter a valid Egyptian phone number (e.g., 01012345678)">
+                <div class="error"></div>
+            </div>
+            <div class="input-control">
+                <label for="email">Your Email:</label>
+                <input type="email" class="place" id="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}" title="Please enter a valid email address" required>
+                <div class="error"></div>
+            </div>
+            <div class="buttons">
+                <input type="submit" id="register" class="btn" value="Register">
+                <input type="button" id="reset" class="btn" onclick="window.location.reload()" value="Reset">
+            </div>
+        </form>
+    </div>
+    <script>
+        const form1 = document.getElementById("form1"),
+            Name = document.getElementById("name"),
+            age = document.getElementById("age"),
+            address = document.getElementById("address"),
+            phone = document.getElementById("phone"),
+            email = document.getElementById("email");
+
+        function setError(element, message) {
+            var parent = element.parentNode;
+            var divError = parent.querySelector(".error");
+            divError.innerHTML = message;
+            parent.classList.add("error");
+            parent.classList.remove("success");
+        }
+
+        function setSuccess(element) {
+            var parent = element.parentElement;
+            var divError = parent.querySelector(".error");
+            divError.innerHTML = "";
+            parent.classList.add("success");
+            parent.classList.remove("error");
+        }
+
+        function formValidation() {
+            let userName = Name.value.trim(),
+                userAge = age.value.trim(),
+                userAddress = address.value.trim(),
+                userPhone = phone.value.trim(),
+                userEmail = email.value.trim();
+
+            if (userName == "") {
+                setError(Name, "You should enter your name");
+            } else {
+                setSuccess(Name)
+            }
+
+            if (userAge == "") {
+                setError(age, "You should enter your age");
+            } else {
+                setSuccess(age)
+            }
+            if (userAddress == "") {
+                setError(address, "You should enter your address");
+            } else {
+                setSuccess(address)
+            }
+            if (userPhone == "") {
+                setError(phone, "You should enter your phone");
+            } else {
+                setSuccess(phone)
+            }
+            if (userEmail == "") {
+                setError(email, "You should enter your email");
+            } else {
+                setSuccess(email)
+            }
+        }
+
+        form1.onsubmit = function (event) {
+            event.preventDefault();
+            formValidation();
+        }
+    </script>
+</body>
+</html>
